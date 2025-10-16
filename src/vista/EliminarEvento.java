@@ -1,12 +1,13 @@
 package vista;
 
 import controlador.EventoDAO;
-import java.awt.Color;
 import modelo.Evento;
 import modelo.Usuario;
+import com.formdev.flatlaf.FlatDarkLaf;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
@@ -17,30 +18,80 @@ public class EliminarEvento extends JFrame {
 
     public EliminarEvento(Usuario organizador) {
         this.organizador = organizador;
-Color azulSuave = new Color(173, 216, 230);
-    getContentPane().setBackground(azulSuave);
+
+        // Activar tema FlatLaf Dark
+        FlatDarkLaf.setup();
 
         setTitle("Eliminar Evento - TimeSync");
-        setSize(600, 400);
+        setSize(700, 500);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        setLayout(null);
+        setLayout(new BorderLayout());
 
+        // Fondo principal
+        JPanel fondo = new JPanel(new BorderLayout());
+        fondo.setBackground(new Color(20, 20, 20));
+        add(fondo, BorderLayout.CENTER);
+
+        // Panel central
+        JPanel centro = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30));
+        centro.setOpaque(false);
+        fondo.add(centro, BorderLayout.CENTER);
+
+        // Tarjeta
+        JPanel tarjeta = new JPanel();
+        tarjeta.setBackground(new Color(40, 40, 40));
+        tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
+        tarjeta.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        tarjeta.setPreferredSize(new Dimension(620, 400));
+        tarjeta.setOpaque(true);
+        centro.add(tarjeta);
+
+        // Título
         JLabel lblTitulo = new JLabel("Selecciona un evento para eliminar");
-        lblTitulo.setBounds(20, 20, 300, 25);
-        add(lblTitulo);
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        lblTitulo.setAlignmentX(CENTER_ALIGNMENT);
+        tarjeta.add(lblTitulo);
 
+        tarjeta.add(Box.createVerticalStrut(20));
+
+        // Tabla de eventos
         tablaEventos = new JTable();
+        tablaEventos.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tablaEventos.setRowHeight(25);
+        tablaEventos.setGridColor(new Color(80, 80, 80));
+        tablaEventos.setForeground(Color.WHITE);
+        tablaEventos.setBackground(new Color(60, 60, 60));
+        tablaEventos.getTableHeader().setBackground(new Color(30, 30, 30));
+        tablaEventos.getTableHeader().setForeground(Color.WHITE);
+        tablaEventos.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+
         JScrollPane scrollPane = new JScrollPane(tablaEventos);
-        scrollPane.setBounds(20, 60, 540, 200);
-        add(scrollPane);
+        scrollPane.setPreferredSize(new Dimension(580, 200));
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(80, 80, 80)));
+        tarjeta.add(scrollPane);
 
+        tarjeta.add(Box.createVerticalStrut(20));
+
+        // Botón eliminar
         btnEliminar = new JButton("Eliminar Evento");
-        btnEliminar.setBounds(200, 280, 180, 30);
-        add(btnEliminar);
+        btnEliminar.setAlignmentX(CENTER_ALIGNMENT);
+        btnEliminar.setPreferredSize(new Dimension(200, 40));
+        btnEliminar.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        btnEliminar.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btnEliminar.setBackground(new Color(255, 80, 80));
+        btnEliminar.setForeground(Color.WHITE);
+        btnEliminar.setFocusPainted(false);
+        btnEliminar.setBorderPainted(false);
+        tarjeta.add(btnEliminar);
 
+        tarjeta.add(Box.createVerticalGlue());
+
+        // Cargar eventos
         cargarEventos();
 
+        // Acción botón eliminar
         btnEliminar.addActionListener((ActionEvent e) -> {
             int fila = tablaEventos.getSelectedRow();
             if (fila >= 0) {
@@ -72,5 +123,10 @@ Color azulSuave = new Color(173, 216, 230);
         }
 
         tablaEventos.setModel(model);
+    }
+
+    public static void main(String[] args) {
+        Usuario demo = new Usuario("Valentina", "org@mail.com", "123", "organizador");
+        SwingUtilities.invokeLater(() -> new EliminarEvento(demo).setVisible(true));
     }
 }

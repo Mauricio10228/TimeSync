@@ -4,7 +4,8 @@ import controlador.EventoDAO;
 import controlador.InscripcionDAO;
 import modelo.Evento;
 import modelo.Usuario;
-import java.awt.Color;
+import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
@@ -20,54 +21,103 @@ public class PanelCliente extends JFrame {
     public PanelCliente(Usuario cliente) {
         this.cliente = cliente;
 
+        // Activar tema FlatLaf Dark
+        FlatDarkLaf.setup();
+
         setTitle("Panel del Cliente - TimeSync");
-        setSize(800, 500);
+        setSize(800, 600);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        Color azulSuave = new Color(173, 216, 230);
+        // Fondo principal
+        JPanel fondo = new JPanel(new BorderLayout());
+        fondo.setBackground(new Color(20, 20, 20));
+        add(fondo, BorderLayout.CENTER);
 
-        // Panel izquierdo: texto y tabla
-        JPanel panelIzquierdo = new JPanel();
-        panelIzquierdo.setBackground(azulSuave);
-        panelIzquierdo.setPreferredSize(new Dimension(500, 0));
-        panelIzquierdo.setLayout(null);
+        // Panel central con FlowLayout
+        JPanel centro = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 30));
+        centro.setOpaque(false);
+        fondo.add(centro, BorderLayout.CENTER);
 
-        JLabel lblTitulo = new JLabel("Eventos Disponibles");
-        lblTitulo.setBounds(20, 20, 200, 25);
-        lblTitulo.setFont(new Font("Arial", Font.BOLD, 16));
-        panelIzquierdo.add(lblTitulo);
+        // Tarjeta
+        JPanel tarjeta = new JPanel();
+        tarjeta.setBackground(new Color(40, 40, 40));
+        tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
+        tarjeta.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        tarjeta.setPreferredSize(new Dimension(700, 500));
+        tarjeta.setOpaque(true);
+        centro.add(tarjeta);
 
+        // Logo
+        JLabel logo = new JLabel();
+        logo.setAlignmentX(CENTER_ALIGNMENT);
+        ImageIcon icon = new ImageIcon(getClass().getResource("/vista/TimeSync_resized_250x200.png"));
+        logo.setIcon(icon);
+        tarjeta.add(logo);
+
+        tarjeta.add(Box.createVerticalStrut(10));
+
+        // Título
+        JLabel lblTitulo = new JLabel("Eventos disponibles");
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 22));
+        lblTitulo.setAlignmentX(CENTER_ALIGNMENT);
+        tarjeta.add(lblTitulo);
+
+        tarjeta.add(Box.createVerticalStrut(20));
+
+        // Tabla de eventos
         tablaEventos = new JTable();
-        JScrollPane scrollPane = new JScrollPane(tablaEventos);
-        scrollPane.setBounds(20, 60, 450, 200);
-        panelIzquierdo.add(scrollPane);
+        tablaEventos.setFont(new Font("SansSerif", Font.PLAIN, 13));
+        tablaEventos.setRowHeight(25);
+        tablaEventos.setGridColor(new Color(80, 80, 80));
+        tablaEventos.setForeground(Color.WHITE);
+        tablaEventos.setBackground(new Color(60, 60, 60));
+        tablaEventos.getTableHeader().setBackground(new Color(30, 30, 30));
+        tablaEventos.getTableHeader().setForeground(Color.WHITE);
+        tablaEventos.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
 
+       JScrollPane scrollPane = new JScrollPane(tablaEventos);
+scrollPane.setPreferredSize(new Dimension(800, 320)); // ← altura ajustada para 5 eventos
+scrollPane.setBorder(BorderFactory.createLineBorder(new Color(80, 80, 80)));
+tarjeta.add(scrollPane);
+
+
+        tarjeta.add(Box.createVerticalStrut(20));
+
+        // Botón Inscribirse
         JButton btnInscribirse = new JButton("Inscribirse en evento");
-        btnInscribirse.setBounds(150, 280, 200, 30);
-        panelIzquierdo.add(btnInscribirse);
+        btnInscribirse.setAlignmentX(CENTER_ALIGNMENT);
+        btnInscribirse.setPreferredSize(new Dimension(200, 40));
+        btnInscribirse.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        btnInscribirse.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btnInscribirse.setBackground(new Color(0, 122, 255));
+        btnInscribirse.setForeground(Color.WHITE);
+        btnInscribirse.setFocusPainted(false);
+        btnInscribirse.setBorderPainted(false);
+        tarjeta.add(btnInscribirse);
 
+        tarjeta.add(Box.createVerticalStrut(15));
+
+        // Botón Volver
         JButton btnVolver = new JButton("Volver");
-        btnVolver.setBounds(150, 320, 200, 30);
-        panelIzquierdo.add(btnVolver);
+        btnVolver.setAlignmentX(CENTER_ALIGNMENT);
+        btnVolver.setPreferredSize(new Dimension(200, 40));
+        btnVolver.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        btnVolver.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btnVolver.setBackground(new Color(100, 100, 100));
+        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setFocusPainted(false);
+        btnVolver.setBorderPainted(false);
+        tarjeta.add(btnVolver);
 
-        // Panel derecho: logo centrado
-        JPanel panelDerecho = new JPanel();
-        panelDerecho.setBackground(azulSuave);
-        panelDerecho.setLayout(new BorderLayout());
-
-        JLabel logo = new JLabel(new ImageIcon("src/assets/logo.png")); // Cambia si tu ruta es distinta
-        logo.setHorizontalAlignment(SwingConstants.CENTER);
-        panelDerecho.add(logo, BorderLayout.CENTER);
-
-        // Añadir paneles al frame
-        add(panelIzquierdo, BorderLayout.WEST);
-        add(panelDerecho, BorderLayout.CENTER);
+        tarjeta.add(Box.createVerticalGlue());
 
         // Eventos
         cargarEventos();
 
+        // Lógica botones
         btnInscribirse.addActionListener((ActionEvent e) -> {
             int fila = tablaEventos.getSelectedRow();
             if (fila >= 0) {
@@ -79,7 +129,7 @@ public class PanelCliente extends JFrame {
                 if (exito) {
                     JOptionPane.showMessageDialog(this, "Inscripción exitosa");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Error al inscribirse", "Error 666", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Error al inscribirse", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Seleccione un evento primero.");

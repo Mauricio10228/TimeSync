@@ -2,7 +2,7 @@ package vista;
 
 import controlador.UsuarioDAO;
 import modelo.Usuario;
-
+import com.formdev.flatlaf.FlatDarkLaf;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,62 +14,134 @@ public class Login extends JFrame {
     private JButton btnLogin;
 
     public Login() {
+        // Activar tema FlatLaf Dark
+        FlatDarkLaf.setup();
+
         setTitle("Inicio de Sesión - TimeSync");
-        setSize(500, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setLayout(null);
+        setSize(500, 750);
+        setLayout(new BorderLayout());
 
-        // Fondo azul brillante
-        getContentPane().setBackground(new Color(173, 216, 230)); // Azul celeste suave
+        // Panel de fondo
+        JPanel fondo = new JPanel();
+        fondo.setBackground(new Color(20, 20, 20));
+        fondo.setLayout(new BorderLayout());
+        add(fondo, BorderLayout.CENTER);
 
-        // Logo correctamente cargado desde classpath
+        // Espacio superior
+        JPanel panelSuperior = new JPanel();
+        panelSuperior.setOpaque(false);
+        panelSuperior.setPreferredSize(new Dimension(0, 80));
+        fondo.add(panelSuperior, BorderLayout.NORTH);
+
+        // Panel central
+        JPanel centro = new JPanel(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        centro.setOpaque(false);
+        fondo.add(centro, BorderLayout.CENTER);
+
+        // Tarjeta con elementos
+        JPanel tarjeta = new JPanel();
+        tarjeta.setBackground(new Color(40, 40, 40));
+        tarjeta.setLayout(new BoxLayout(tarjeta, BoxLayout.Y_AXIS));
+        tarjeta.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
+        tarjeta.setOpaque(true);
+
+        // Logo
         JLabel lblLogo = new JLabel();
+        lblLogo.setAlignmentX(CENTER_ALIGNMENT);
         ImageIcon logoIcon = new ImageIcon(getClass().getResource("/vista/TimeSync_resized_250x200.png"));
         lblLogo.setIcon(logoIcon);
-        lblLogo.setBounds(125, 20, 250, 100); // Centrado y proporcionado
-        add(lblLogo);
+        tarjeta.add(lblLogo);
 
-        // Correo
-        JLabel lblCorreo = new JLabel("Correo:");
-        lblCorreo.setForeground(Color.BLACK);
-        lblCorreo.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblCorreo.setBounds(80, 150, 100, 30);
-        add(lblCorreo);
+        tarjeta.add(Box.createVerticalStrut(10));
 
+        // Título
+        JLabel lblTitulo = new JLabel("Iniciar sesión");
+        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setFont(new Font("SansSerif", Font.BOLD, 24));
+        lblTitulo.setAlignmentX(CENTER_ALIGNMENT);
+        tarjeta.add(lblTitulo);
+
+        tarjeta.add(Box.createVerticalStrut(25));
+
+        // Campo correo
         txtCorreo = new JTextField();
-        txtCorreo.setBounds(180, 150, 220, 30);
-        txtCorreo.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(txtCorreo);
+        txtCorreo.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        txtCorreo.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtCorreo.setBorder(BorderFactory.createTitledBorder("Correo"));
+        tarjeta.add(txtCorreo);
 
-        // Contraseña
-        JLabel lblContrasena = new JLabel("Contraseña:");
-        lblContrasena.setForeground(Color.BLACK);
-        lblContrasena.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblContrasena.setBounds(80, 200, 100, 30);
-        add(lblContrasena);
+        tarjeta.add(Box.createVerticalStrut(20));
 
+        // Campo contraseña
         txtContrasena = new JPasswordField();
-        txtContrasena.setBounds(180, 200, 220, 30);
-        txtContrasena.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(txtContrasena);
+        txtContrasena.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        txtContrasena.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        txtContrasena.setBorder(BorderFactory.createTitledBorder("Contraseña"));
+        tarjeta.add(txtContrasena);
 
-        // Botón Iniciar Sesión
-        btnLogin = new JButton("Iniciar Sesión");
-        btnLogin.setBounds(150, 270, 180, 40);
-        btnLogin.setBackground(Color.WHITE);
-        btnLogin.setForeground(Color.BLACK);
-        btnLogin.setFont(new Font("Arial", Font.BOLD, 16));
-        add(btnLogin);
+        tarjeta.add(Box.createVerticalStrut(30));
 
-        // Botón Registrarse
-        JButton btnRegistrar = new JButton("Registrarse");
-        btnRegistrar.setBounds(150, 330, 180, 35);
-        btnRegistrar.setBackground(Color.WHITE);
-        btnRegistrar.setFont(new Font("Arial", Font.PLAIN, 14));
-        add(btnRegistrar);
+        // Botón login
+        btnLogin = new JButton("Iniciar sesión");
+        btnLogin.setAlignmentX(CENTER_ALIGNMENT);
+        btnLogin.setPreferredSize(new Dimension(200, 40));
+        btnLogin.setMaximumSize(new Dimension(Integer.MAX_VALUE, 40));
+        btnLogin.setFont(new Font("SansSerif", Font.BOLD, 16));
+        btnLogin.setBackground(new Color(0, 122, 255));
+        btnLogin.setForeground(Color.WHITE);
+        btnLogin.setFocusPainted(false);
+        btnLogin.setBorderPainted(false);
+        tarjeta.add(btnLogin);
 
-        // Acción para iniciar sesión
+        tarjeta.add(Box.createVerticalStrut(25));
+
+        // Texto pregunta
+        JLabel lblPregunta = new JLabel("¿No tienes cuenta?");
+        lblPregunta.setForeground(new Color(180, 180, 180));
+        lblPregunta.setAlignmentX(CENTER_ALIGNMENT);
+        tarjeta.add(lblPregunta);
+
+        tarjeta.add(Box.createVerticalStrut(5));
+
+      // Botón registrarse (estilo enlace con hover)
+JButton btnRegistrar = new JButton("Registrarse");
+btnRegistrar.setAlignmentX(CENTER_ALIGNMENT);
+btnRegistrar.setFont(new Font("SansSerif", Font.PLAIN, 14));
+btnRegistrar.setForeground(Color.WHITE);
+btnRegistrar.setContentAreaFilled(false);
+btnRegistrar.setBorderPainted(false);
+btnRegistrar.setFocusPainted(false);
+btnRegistrar.setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+// Efecto hover: cambia color al pasar el mouse
+btnRegistrar.addMouseListener(new java.awt.event.MouseAdapter() {
+    @Override
+    public void mouseEntered(java.awt.event.MouseEvent evt) {
+        btnRegistrar.setForeground(new Color(0, 122, 255)); // Azul claro
+    }
+
+    @Override
+    public void mouseExited(java.awt.event.MouseEvent evt) {
+        btnRegistrar.setForeground(Color.WHITE); // Vuelve al blanco
+    }
+});
+
+tarjeta.add(btnRegistrar);
+
+        // ScrollPane para evitar cortes
+        JScrollPane scrollPane = new JScrollPane(tarjeta);
+        scrollPane.setBorder(null);
+        scrollPane.setOpaque(false);
+        scrollPane.getViewport().setOpaque(false);
+        scrollPane.setPreferredSize(new Dimension(370, 550));
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        centro.add(scrollPane);
+
+        // ----------- Lógica de botones -----------
+
         btnLogin.addActionListener((ActionEvent e) -> {
             String correo = txtCorreo.getText();
             String contrasena = new String(txtContrasena.getPassword());
@@ -78,8 +150,7 @@ public class Login extends JFrame {
             Usuario usuario = dao.autenticar(correo, contrasena);
 
             if (usuario != null) {
-                String rol = usuario.getRol().trim().toLowerCase();
-                switch (rol) {
+                switch (usuario.getRol().trim().toLowerCase()) {
                     case "organizador":
                         new MenuOrganizador(usuario).setVisible(true);
                         break;
@@ -98,7 +169,6 @@ public class Login extends JFrame {
             }
         });
 
-        // Acción para registrarse
         btnRegistrar.addActionListener(e -> {
             new Registro().setVisible(true);
             dispose();
