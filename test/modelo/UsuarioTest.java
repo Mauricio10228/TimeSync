@@ -1,161 +1,85 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/UnitTests/JUnit5TestClass.java to edit this template
- */
 package modelo;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-/**
- *
- * @author mauri
- */
 public class UsuarioTest {
     
-    public UsuarioTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
-    
-    @BeforeEach
-    public void setUp() {
-    }
-    
-    @AfterEach
-    public void tearDown() {
+    @Test
+    public void testConstructorConId() {
+        Usuario user = new Usuario(1, "Juan", "juan@mail.com", "1234", "admin");
+        assertEquals(1, user.getId());
+        assertEquals("Juan", user.getNombre());
+        assertEquals("juan@mail.com", user.getCorreo());
+        assertEquals("1234", user.getContrasena());
+        assertEquals("admin", user.getRol());
     }
 
-    /**
-     * Test of getId method, of class Usuario.
-     */
+    @Test
+    public void testConstructorSinId() {
+        Usuario user = new Usuario("Carlos", "c@mail.com", "abcd", "cliente");
+        assertEquals(0, user.getId());
+        assertEquals("Carlos", user.getNombre());
+        assertEquals("c@mail.com", user.getCorreo());
+        assertEquals("abcd", user.getContrasena());
+        assertEquals("cliente", user.getRol());
+    }
+
     @Test
     public void testGetId() {
-        System.out.println("getId");
-        Usuario instance = null;
-        int expResult = 0;
-        int result = instance.getId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(10, "Ana", "ana@mail.com", "pass", "admin");
+        assertEquals(10, user.getId());
     }
 
-    /**
-     * Test of getNombre method, of class Usuario.
-     */
     @Test
     public void testGetNombre() {
-        System.out.println("getNombre");
-        Usuario instance = null;
-        String expResult = "";
-        String result = instance.getNombre();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Pedro", "p@mail.com", "123", "cliente");
+        assertEquals("Pedro", user.getNombre());
     }
 
-    /**
-     * Test of getCorreo method, of class Usuario.
-     */
     @Test
     public void testGetCorreo() {
-        System.out.println("getCorreo");
-        Usuario instance = null;
-        String expResult = "";
-        String result = instance.getCorreo();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Pedro", "p@mail.com", "123", "cliente");
+        assertEquals("p@mail.com", user.getCorreo());
     }
 
-    /**
-     * Test of getContrasena method, of class Usuario.
-     */
     @Test
     public void testGetContrasena() {
-        System.out.println("getContrasena");
-        Usuario instance = null;
-        String expResult = "";
-        String result = instance.getContrasena();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Pedro", "p@mail.com", "123", "cliente");
+        assertEquals("123", user.getContrasena());
     }
 
-    /**
-     * Test of getRol method, of class Usuario.
-     */
     @Test
     public void testGetRol() {
-        System.out.println("getRol");
-        Usuario instance = null;
-        String expResult = "";
-        String result = instance.getRol();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Pedro", "p@mail.com", "123", "cliente");
+        assertEquals("cliente", user.getRol());
     }
 
-    /**
-     * Test of setNombre method, of class Usuario.
-     */
     @Test
     public void testSetNombre() {
-        System.out.println("setNombre");
-        String nombre = "";
-        Usuario instance = null;
-        instance.setNombre(nombre);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Old", "o@mail.com", "123", "admin");
+        user.setNombre("Nuevo");
+        assertEquals("Nuevo", user.getNombre());
     }
 
-    /**
-     * Test of setCorreo method, of class Usuario.
-     */
     @Test
     public void testSetCorreo() {
-        System.out.println("setCorreo");
-        String correo = "";
-        Usuario instance = null;
-        instance.setCorreo(correo);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Test", "old@mail.com", "123", "admin");
+        user.setCorreo("new@mail.com");
+        assertEquals("new@mail.com", user.getCorreo());
     }
 
-    /**
-     * Test of setContrasena method, of class Usuario.
-     */
     @Test
     public void testSetContrasena() {
-        System.out.println("setContrasena");
-        String contrasena = "";
-        Usuario instance = null;
-        instance.setContrasena(contrasena);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Test", "mail@mail.com", "old", "admin");
+        user.setContrasena("newpass");
+        assertEquals("newpass", user.getContrasena());
     }
 
-    /**
-     * Test of setRol method, of class Usuario.
-     */
     @Test
     public void testSetRol() {
-        System.out.println("setRol");
-        String rol = "";
-        Usuario instance = null;
-        instance.setRol(rol);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Usuario user = new Usuario(1, "Test", "mail@mail.com", "pass", "oldRol");
+        user.setRol("newRol");
+        assertEquals("newRol", user.getRol());
     }
-    
 }

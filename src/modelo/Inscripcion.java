@@ -24,5 +24,5 @@ public class Inscripcion {
         return fechaInscripcion;
     }
 
-    // Setters si los necesitas
+ 
 }

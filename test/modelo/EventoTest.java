@@ -1,96 +1,96 @@
+
 package modelo;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.Test;
+import static org.junit.Assert.*;
 
-/**
- * Pruebas unitarias para la clase Evento.
- */
 public class EventoTest {
-
-    private Evento evento;
-
-    @BeforeEach
-    public void setUp() {
-        evento = new Evento(
-                1,
-                "Concierto de Rock",
-                "Evento musical al aire libre",
-                "2025-12-20",
-                "19:00",
-                "Parque Central",
-                50000.0,
-                100,
-                10
-        );
+    
+    // ✅ Prueba constructor con ID
+    @Test
+    public void testConstructorConId() {
+        Evento evento = new Evento(1, "Concierto", "Musica en vivo", "2025-10-10", "20:00", "Teatro",
+                                   50.5, 100, 10);
+        assertEquals(1, evento.getId());
+        assertEquals("Concierto", evento.getTitulo());
+        assertEquals("Musica en vivo", evento.getDescripcion());
+        assertEquals("2025-10-10", evento.getFecha());
+        assertEquals("20:00", evento.getHora());
+        assertEquals("Teatro", evento.getLugar());
+        assertEquals(50.5, evento.getPrecio(), 0.001);
+        assertEquals(100, evento.getCupoMaximo());
+        assertEquals(10, evento.getOrganizadorId());
     }
+
+    // ✅ Prueba constructor SIN ID (hora por defecto "00:00")
+    @Test
+    public void testConstructorSinId() {
+        Evento evento = new Evento("Fiesta", "Cumpleaños", "2025-05-05", "Salon",
+                                   30.0, 50, 5);
+        assertEquals(0, evento.getId()); // int por defecto = 0
+        assertEquals("Fiesta", evento.getTitulo());
+        assertEquals("Cumpleaños", evento.getDescripcion());
+        assertEquals("2025-05-05", evento.getFecha());
+        assertEquals("00:00", evento.getHora()); // valor por defecto
+        assertEquals("Salon", evento.getLugar());
+        assertEquals(30.0, evento.getPrecio(), 0.001);
+        assertEquals(50, evento.getCupoMaximo());
+        assertEquals(5, evento.getOrganizadorId());
+    }
+
+    // ✅ Getters individuales (opcional, pero recomendables)
 
     @Test
     public void testGetId() {
-        assertEquals(1, evento.getId());
+        Evento evento = new Evento(10, "Test", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 1);
+        assertEquals(10, evento.getId());
     }
 
     @Test
     public void testGetTitulo() {
-        assertEquals("Concierto de Rock", evento.getTitulo());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 1);
+        assertEquals("Titulo", evento.getTitulo());
     }
 
     @Test
     public void testGetDescripcion() {
-        assertEquals("Evento musical al aire libre", evento.getDescripcion());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 1);
+        assertEquals("Desc", evento.getDescripcion());
     }
 
     @Test
     public void testGetFecha() {
-        assertEquals("2025-12-20", evento.getFecha());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 1);
+        assertEquals("2025-01-01", evento.getFecha());
     }
 
     @Test
     public void testGetHora() {
-        assertEquals("19:00", evento.getHora());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 1);
+        assertEquals("10:00", evento.getHora());
     }
 
     @Test
     public void testGetLugar() {
-        assertEquals("Parque Central", evento.getLugar());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 1);
+        assertEquals("Lugar", evento.getLugar());
     }
 
     @Test
     public void testGetPrecio() {
-        assertEquals(50000.0, evento.getPrecio());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 99.99, 20, 1);
+        assertEquals(99.99, evento.getPrecio(), 0.001);
     }
 
     @Test
     public void testGetCupoMaximo() {
-        assertEquals(100, evento.getCupoMaximo());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 50, 1);
+        assertEquals(50, evento.getCupoMaximo());
     }
 
     @Test
     public void testGetOrganizadorId() {
-        assertEquals(10, evento.getOrganizadorId());
-    }
-
-    // ✅ También probamos el segundo constructor (sin ID ni hora explícita)
-    @Test
-    public void testConstructorAlternativo() {
-        Evento eventoAlt = new Evento(
-                "Charla de Tecnología",
-                "Conferencia sobre IA",
-                "2025-11-15",
-                "Auditorio",
-                0.0,
-                50,
-                5
-        );
-
-        assertEquals("Charla de Tecnología", eventoAlt.getTitulo());
-        assertEquals("Conferencia sobre IA", eventoAlt.getDescripcion());
-        assertEquals("2025-11-15", eventoAlt.getFecha());
-        assertEquals("00:00", eventoAlt.getHora()); // valor por defecto
-        assertEquals("Auditorio", eventoAlt.getLugar());
-        assertEquals(0.0, eventoAlt.getPrecio());
-        assertEquals(50, eventoAlt.getCupoMaximo());
-        assertEquals(5, eventoAlt.getOrganizadorId());
+        Evento evento = new Evento(1, "Titulo", "Desc", "2025-01-01", "10:00", "Lugar", 10.0, 20, 7);
+        assertEquals(7, evento.getOrganizadorId());
     }
 }

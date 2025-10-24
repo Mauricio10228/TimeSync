@@ -180,5 +180,5 @@ public class PanelOrganizador extends JFrame {
     public static void main(String[] args) {
         Usuario demo = new Usuario("Valentina", "org@mail.com", "123", "organizador");
         SwingUtilities.invokeLater(() -> new PanelOrganizador(demo).setVisible(true));
-    }
+}
 }
